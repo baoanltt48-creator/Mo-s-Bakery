@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sản phẩm - MƠ'S BAKERY</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins', sans-serif;
+    background:#f5efe8;
+}
+
+/* NAVBAR */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+    background:#e6d5c3;
+}
+.logo{font-size:24px;font-weight:bold;}
+
+.menu a{
+    margin:0 15px;
+    text-decoration:none;
+    color:#8C6A54;
+    position:relative;
+}
+.menu a:hover{color:red;}
+.menu a::after{
+    content:"";
+    position:absolute;
+    bottom:-5px;
+    left:0;
+    width:0;
+    height:2px;
+    background:red;
+    transition:0.3s;
+}
+.menu a:hover::after{width:100%;}
+
+/* TITLE */
+.title{
+    text-align:center;
+    padding:30px 0 10px;
+    font-family:'Playfair Display';
+    font-size:32px;
+    color:#5c3d2e;
+}
+
+/* TABS */
+.tabs{
+    display:flex;
+    justify-content:center;
+    margin:20px 0;
+}
+.tab{
+    padding:10px 20px;
+    margin:5px;
+    border-radius:20px;
+    background:#c89b7b;
+    color:white;
+    cursor:pointer;
+}
+.tab.active{
+    background:#8C6A54;
+}
+
+/* SLIDER */
+.wrapper{
+    overflow:hidden;
+    width:90%;
+    margin:auto;
+}
+.slider{
+    display:flex;
+    transition:0.5s;
+}
+.page{
+    min-width:100%;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+/* CARD */
+.card{
+    background:#e0c2a8;
+    padding:20px;
+    border-radius:15px;
+    width:200px;
+    text-align:center;
+    color:#5c3d2e;
+}
+.card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+    border-radius:10px;
+}
+.card h3{
+    font-family:'Playfair Display';
+    margin:10px 0;
+}
+.price{
+    margin-bottom:10px;
+}
+button{
+    padding:8px;
+    border:none;
+    border-radius:10px;
+    background:#8C6A54;
+    color:white;
+    cursor:pointer;
+}
+
+/* FOOTER */
+.contact{
+    display:flex;
+    justify-content:space-between;
+    padding:40px;
+    background:#e6d5c3;
+    margin-top:50px;
+}
+.contact div{width:30%;}
+.social i{font-size:20px;margin-right:10px;}
+
+.map iframe{
+    width:100%;
+    height:300px;
+    border:0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">MƠ'S BAKERY</div>
+    <div class="menu">
+    <a href="TRANGCHU.html">Trang chủ</a>
+    <a href="GIOITHIEU.html">Giới thiệu</a>
+    <a href="SANPHAM.html">Sản phẩm</a>
+    <a href="GIOHANG.html">Giỏ hàng</a>
+    <a href="LIENHE.html">Liên hệ</a>
+</div>
+</div>
+
+
+<h1 class="title">Danh sách sản phẩm</h1>
+
+<!-- TABS -->
+<div class="tabs">
+    <div class="tab active" onclick="goTo(0)">Bánh bông lan</div>
+    <div class="tab" onclick="goTo(1)">Bánh ngọt</div>
+    <div class="tab" onclick="goTo(2)">Tráng miệng</div>
+    <div class="tab" onclick="goTo(3)">Bánh kem</div>
+</div>
+
+<!-- SLIDER -->
+<div class="wrapper">
+<div class="slider" id="slider">
+<!-- PAGE 1 -->
+<div class="page">
+<div class="card">
+<img src="https://i.pinimg.com/1200x/76/78/7b/76787b359efc7aeccf9f9236695bd437.jpg">
+<h3>Bông lan trứng muối</h3>
+<p class="price">50.000đ</p>
+<button onclick="addToCart(
+'Bông lan trứng muối',
+50000,
+'https://i.pinimg.com/1200x/76/78/7b/76787b359efc7aeccf9f9236695bd437.jpg'
+)">Thêm vào giỏ</button>
+</div>
+
+<div class="card">
+<img src="https://i.pinimg.com/736x/ba/11/d0/ba11d0197f21d047e70fa3c90a8bfedb.jpg">
+<h3>Bông lan cuộn socola</h3>
+<p class="price">45.000đ</p>
+<button onclick="addToCart(
+'Bông lan cuộn socola',
+45000,
+'https://i.pinimg.com/736x/ba/11/d0/ba11d0197f21d047e70fa3c90a8bfedb.jpg'
+)">Thêm vào giỏ</button>
+</div>
+
+<div class="card">
+<img src="https://i.pinimg.com/736x/64/16/51/6416515d0b1d7529b130bf740ea8b926.jpg">
+<h3>Cheesecake chanh</h3>
+<p class="price">55.000đ</p>
+<button onclick="addToCart(
+'Cheesecake chanh',
+55000,
+'https://i.pinimg.com/736x/64/16/51/6416515d0b1d7529b130bf740ea8b926.jpg'
+)">Thêm vào giỏ</button>
+</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+<div class="card">
+<img src="https://i.pinimg.com/736x/5c/20/aa/5c20aa662b8a5f3d926ac40035a3836a.jpg">
+<h3>Donut</h3>
+<p class="price">20.000đ</p>
+<button onclick="addToCart(
+'Donut',
+20000,
+'https://i.pinimg.com/736x/5c/20/aa/5c20aa662b8a5f3d926ac40035a3836a.jpg'
+)">Thêm vào giỏ</button>
+</div>
+
+<div class="card">
+<img src="https://i.pinimg.com/1200x/f6/43/07/f6430785ce62aa377e6a892eb9f00612.jpg">
+<h3>Bánh sừng bò</h3>
+<p class="price">25.000đ</p>
+<button onclick="addToCart(
+'Bánh sừng bò',
+25000,
+'https://i.pinimg.com/1200x/f6/43/07/f6430785ce62aa377e6a892eb9f00612.jpg'
+)">Thêm vào giỏ</button>
+</div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page">
+<div class="card">
+<img src="https://i.pinimg.com/736x/8f/ad/d3/8fadd3eeb6ba9170bcf012ecbebc6ae2.jpg">
+<h3>Tiramisu</h3>
+<p class="price">50.000đ</p>
+<button onclick="addToCart(
+'Tiramisu',
+50000,
+'https://i.pinimg.com/736x/8f/ad/d3/8fadd3eeb6ba9170bcf012ecbebc6ae2.jpg'
+)">Thêm vào giỏ</button>
+</div>
+
+<div class="card">
+<img src="https://i.pinimg.com/1200x/8d/0b/40/8d0b402de008009a825983423e71141e.jpg">
+<h3>Su kem</h3>
+<p class="price">30.000đ</p>
+<button onclick="addToCart(
+'Su kem',
+30000,
+'https://i.pinimg.com/1200x/8d/0b/40/8d0b402de008009a825983423e71141e.jpg'
+)">Thêm vào giỏ</button>
+</div>
+
+<div class="card">
+<img src="https://i.pinimg.com/1200x/79/44/8a/79448abb70c5d57fae06050aa8f8604e.jpg">
+<h3>Pudding caramel</h3>
+<p class="price">20.000đ</p>
+<button onclick="addToCart(
+'Pudding caramel',
+20000,
+'https://i.pinimg.com/1200x/79/44/8a/79448abb70c5d57fae06050aa8f8604e.jpg'
+)">Thêm vào giỏ</button>
+</div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page">
+<div class="card">
+<img src="https://i.pinimg.com/1200x/0e/4d/de/0e4ddebb68b0fd54b6a7ea3fd8606815.jpg">
+<h3>Bánh kem socola</h3>
+<p class="price">200.000đ</p>
+<button onclick="addToCart(
+'Bánh kem socola',
+200000,
+'https://i.pinimg.com/1200x/0e/4d/de/0e4ddebb68b0fd54b6a7ea3fd8606815.jpg'
+)">Thêm vào giỏ</button>
+</div>
+
+<div class="card">
+<img src="https://i.pinimg.com/736x/f2/45/ba/f245ba99fe2744d5f62934ed0ffa34d5.jpg">
+<h3>Bánh kem matcha</h3>
+<p class="price">235.000đ</p>
+<button onclick="addToCart(
+'Bánh kem matcha',
+235000,
+'https://i.pinimg.com/736x/f2/45/ba/f245ba99fe2744d5f62934ed0ffa34d5.jpg'
+)">Thêm vào giỏ</button>
+</div>
+
+<div class="card">
+<img src="https://i.pinimg.com/1200x/92/35/43/9235432d91dc7ff714c91f2be4bd1af5.jpg">
+<h3>Bánh kem trái cây</h3>
+<p class="price">250.000đ</p>
+<button onclick="addToCart(
+'Bánh kem trái cây',
+250000,
+'https://i.pinimg.com/1200x/92/35/43/9235432d91dc7ff714c91f2be4bd1af5.jpg'
+)">Thêm vào giỏ</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="contact">
+<div>
+<h3>Thông tin</h3>
+<p>Đà Nẵng</p>
+<p>0123 456 789</p>
+<p>mobakery@gmail.com</p>
+</div>
+
+<div class="social">
+<h3>Mạng xã hội</h3>
+<i class="fab fa-facebook"></i>
+<i class="fab fa-tiktok"></i>
+<i class="fa fa-comment"></i>
+</div>
+
+<div>
+<h3>Liên hệ nhanh</h3>
+<p>Inbox để đặt bánh ngay</p>
+</div>
+</div>
+
+<div class="map">
+<iframe src="https://www.google.com/maps?q=Da+Nang&output=embed"></iframe>
+</div>
+
+<!-- FLOATING CONTACT -->
+<div style="
+    position: fixed;
+    right: 15px;
+    bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 999;
+">
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/index.php/?lang=vn" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+        style="
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: white;
+            padding: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        ">
+    </a>
+
+    <!-- Zalo -->
+    <a href="https://zaloweb.com/" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg"
+        style="
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: white;
+            padding: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        ">
+    </a>
+
+    <!-- Call -->
+    <a href="tel:0123456789">
+        <img src="https://cdn-icons-png.flaticon.com/512/597/597177.png"
+        style="
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: white;
+            padding: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        ">
+    </a>
+
+    <!-- Scroll Top -->
+    <a href="#" style="
+        width: 38px;
+        height: 38px;
+        background: #c00;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 18px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    ">
+        ↑
+    </a>
+
+</div>
+
+<script>
+function goTo(index){
+    const slider=document.getElementById("slider");
+    slider.style.transform=`translateX(-${index*100}%)`;
+
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    document.querySelectorAll(".tab")[index].classList.add("active");
+}
+</script>
+    <!-- THÊM VÀO GIỎ HÀNG -->
+<script>
+function addToCart(name, price, img){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let existing = cart.find(item => item.name === name);
+
+    if(existing){
+        existing.quantity += 1;
+    } else {
+        cart.push({
+            name: name,
+            price: price,
+            img: img,
+            quantity: 1
+        });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+const msg = document.createElement("div");
+msg.innerText = "✔ Đã thêm vào giỏ!";
+
+msg.style = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #8C6A54;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-size: 16px;
+    z-index: 999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+`;
+
+document.body.appendChild(msg);
+
+setTimeout(() => msg.remove(), 2000);
+}
+</script>
+</body>
+</html>

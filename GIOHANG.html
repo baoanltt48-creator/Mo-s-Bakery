@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<title>Giỏ hàng - MƠ'S BAKERY</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins', sans-serif;
+    background:#f5efe8;
+}
+
+/* NAVBAR */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+    background:#e6d5c3;
+}
+.logo{font-size:24px;font-weight:bold;}
+
+.menu a{
+    margin:0 15px;
+    text-decoration:none;
+    color:#8C6A54;
+    position:relative;
+}
+.menu a:hover{color:red;}
+.menu a::after{
+    content:"";
+    position:absolute;
+    bottom:-5px;
+    left:0;
+    width:0;
+    height:2px;
+    background:red;
+    transition:0.3s;
+}
+.menu a:hover::after{width:100%;}
+
+
+.container{
+    display:flex;
+    gap:30px;
+    max-width:1200px;
+    margin:30px auto;
+}
+
+/* CART */
+.cart{
+    flex:2;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+}
+
+.cart-item{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr 1fr;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.cart-item img{
+    width:70px;
+    height:70px;
+    border-radius:10px;
+}
+
+.quantity{
+    display:flex;
+    gap:5px;
+}
+
+.quantity button{
+    padding:5px 10px;
+}
+
+.remove-btn{
+    background:red;
+    color:white;
+    border:none;
+    padding:5px 10px;
+}
+
+.total{
+    text-align:right;
+    margin-top:20px;
+    font-weight:bold;
+    color:red;
+}
+
+.order-form h2 {
+      margin-bottom: 20px;
+      color: black;
+      text-align: center;
+      font-size: 26px;
+    }
+
+    .order-form label {
+      display: block;
+      margin-bottom: 6px;
+      margin-top: 14px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    .order-form input,
+    .order-form textarea {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    .order-form input:focus,
+    .order-form textarea:focus {
+      border-color: #b86b77;
+      box-shadow: 0 0 5px rgba(184, 107, 119, 0.3);
+    }
+
+    .order-form textarea {
+      resize: none;
+      height: 90px;
+    }
+
+    .order-form button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 13px;
+      border: none;
+      background: #CC0000;
+      color: white;
+      font-size: 17px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-weight: bold;
+    }
+
+    .order-form button:hover {
+      background: #a85765;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 1000px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .cart, .order-form {
+        width: 100%;
+        max-width: 900px;
+      }
+
+      .cart-header {
+        display: none;
+      }
+
+      .cart-item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .product-col {
+        width: 100%;
+      }
+
+      .price-col,
+      .quantity-col,
+      .total-col,
+      .remove-col {
+        text-align: left;
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+    
+    /* ===== CHAT BOX ===== */
+.chat-toggle {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  background: #d80027;
+  color: white;
+  font-size: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  overflow: visible;
+}
+
+/* hiệu ứng sóng */
+.chat-toggle::before,
+.chat-toggle::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(216, 0, 39, 0.4);
+  animation: pulse 1.8s infinite;
+  z-index: -1;
+}
+
+.chat-toggle::after {
+  animation-delay: 0.9s;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  70% { transform: scale(2.2); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* box */
+.chat-box {
+  position: fixed;
+  bottom: 95px;
+  right: 25px;
+  width: 320px;
+  height: 430px;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.chat-header {
+  background: #d80027;
+  color: white;
+  padding: 15px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-body {
+  flex: 1;
+  padding: 12px;
+  overflow-y: auto;
+  background: #fffafc;
+  display: flex;
+  flex-direction: column;
+}
+
+/* tin nhắn */
+.bot-message,
+.user-message {
+  display: inline-block;
+  width: fit-content;
+  max-width: 75%;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  border-radius: 14px;
+  font-size: 14px;
+  word-wrap: break-word;
+  animation: fadeIn 0.3s ease;
+}
+
+.bot-message {
+  background: #f3d6dc;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.user-message {
+  background: #d80027;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+
+/* typing */
+.typing {
+  font-size: 13px;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+/* footer */
+.chat-footer {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #eee;
+}
+
+.chat-footer input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.chat-footer button {
+  margin-left: 8px;
+  padding: 10px 14px;
+  background: #d80027;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+.chat-toggle {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  background: #d80027;
+  color: white;
+  font-size: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  overflow: visible;
+}
+
+/* hiệu ứng sóng */
+.chat-toggle::before,
+.chat-toggle::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(216, 0, 39, 0.4);
+  animation: pulse 1.8s infinite;
+  z-index: -1;
+}
+
+.chat-toggle::after {
+  animation-delay: 0.9s;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  70% { transform: scale(2.2); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+   /* ===== CHAT BOX ===== */
+.chat-toggle {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  background: #d80027;
+  color: white;
+  font-size: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  overflow: visible;
+}
+
+/* hiệu ứng sóng */
+.chat-toggle::before,
+.chat-toggle::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(216, 0, 39, 0.4);
+  animation: pulse 1.8s infinite;
+  z-index: -1;
+}
+
+.chat-toggle::after {
+  animation-delay: 0.9s;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  70% { transform: scale(2.2); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* box */
+.chat-box {
+  position: fixed;
+  bottom: 95px;
+  right: 25px;
+  width: 320px;
+  height: 430px;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.chat-header {
+  background: #d80027;
+  color: white;
+  padding: 15px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-body {
+  flex: 1;
+  padding: 12px;
+  overflow-y: auto;
+  background: #fffafc;
+  display: flex;
+  flex-direction: column;
+}
+
+/* tin nhắn */
+.bot-message,
+.user-message {
+  display: inline-block;
+  width: fit-content;
+  max-width: 75%;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  border-radius: 14px;
+  font-size: 14px;
+  word-wrap: break-word;
+  animation: fadeIn 0.3s ease;
+}
+
+.bot-message {
+  background: #f3d6dc;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.user-message {
+  background: #d80027;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+
+/* typing */
+.typing {
+  font-size: 13px;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+/* footer */
+.chat-footer {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #eee;
+}
+
+.chat-footer input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.chat-footer button {
+  margin-left: 8px;
+  padding: 10px 14px;
+  background: #d80027;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+.contact{
+    display:flex;
+    justify-content:space-between;
+    padding:40px;
+    background:#e6d5c3;
+}
+.contact div{width:30%;}
+.social i{font-size:20px;margin-right:10px;}
+
+.map iframe{
+    width:100%;
+    height:300px;
+    border:0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="logo">MƠ'S BAKERY</div>
+    <div class="menu">
+    <a href="TRANGCHU.html">Trang chủ</a>
+    <a href="GIOITHIEU.html">Giới thiệu</a>
+    <a href="SANPHAM.html">Sản phẩm</a>
+    <a href="GIOHANG.html">Giỏ hàng</a>
+    <a href="LIENHE.html">Liên hệ</a>
+</div>
+</div>
+
+<h1 style="text-align:center;margin:20px;">🛒 Giỏ hàng</h1>
+
+<div class="container">
+
+<!-- CART -->
+<div class="cart">
+    <div id="cart-items"></div>
+    <div class="total" id="total"></div>
+</div>
+
+<!-- FORM -->
+ <!-- Form đặt hàng -->
+    <div class="order-form">
+      <h2>Thông tin nhận hàng</h2>
+      <form onsubmit="submitOrder(event)">
+        <label for="name">Họ và tên</label>
+        <input type="text" id="name" placeholder="Nhập họ và tên" required>
+
+        <label for="phone">Số điện thoại</label>
+        <input type="tel" id="phone" placeholder="Nhập số điện thoại" required>
+
+        <label for="address">Địa chỉ nhận hàng</label>
+        <input type="text" id="address" placeholder="Nhập địa chỉ nhận hàng" required>
+
+        <label for="date">Ngày nhận bánh</label>
+        <input type="date" id="date" required>
+
+        <label for="note">Ghi chú</label>
+        <textarea id="note" placeholder="Ví dụ: Ghi chữ trên bánh, giao buổi tối..."></textarea>
+
+        <button type="submit">Xác nhận đặt hàng</button>
+      </form>
+    </div>
+  </div>
+
+
+<script>
+// LOAD CART
+function loadCart(){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let container = document.getElementById("cart-items");
+    container.innerHTML = "";
+
+    if(cart.length === 0){
+        container.innerHTML = "Chưa có sản phẩm";
+        document.getElementById("total").innerText="";
+        return;
+    }
+
+    cart.forEach(item=>{
+        let div = document.createElement("div");
+        div.className="cart-item";
+        div.setAttribute("data-price", item.price);
+
+        div.innerHTML = `
+            <div>
+                <img src="${item.img}">
+                ${item.name}
+            </div>
+
+            <div>${item.price.toLocaleString()}đ</div>
+
+            <div class="quantity">
+                <button onclick="changeQuantity('${item.name}',-1)">-</button>
+                <span>${item.quantity}</span>
+                <button onclick="changeQuantity('${item.name}',1)">+</button>
+            </div>
+
+            <div class="item-total"></div>
+
+            <div>
+                <button class="remove-btn" onclick="removeItem('${item.name}')">Xóa</button>
+            </div>
+        `;
+
+        container.appendChild(div);
+    });
+
+    updateTotal();
+}
+
+// UPDATE TOTAL
+function updateTotal(){
+    let items=document.querySelectorAll(".cart-item");
+    let total=0;
+
+    items.forEach(item=>{
+        let price=parseInt(item.dataset.price);
+        let quantity=parseInt(item.querySelector("span").innerText);
+        let sum=price*quantity;
+
+        item.querySelector(".item-total").innerText=sum.toLocaleString()+"đ";
+        total+=sum;
+    });
+
+    document.getElementById("total").innerText="Tổng: "+total.toLocaleString()+"đ";
+}
+
+// CHANGE QUANTITY
+function changeQuantity(name, amount){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let item = cart.find(i=>i.name===name);
+    if(item){
+        item.quantity += amount;
+        if(item.quantity<1) item.quantity=1;
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+}
+
+// REMOVE
+function removeItem(name){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart = cart.filter(i=>i.name!==name);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+}
+
+// ORDER
+function submitOrder(e){
+    e.preventDefault();
+
+    // reset form
+    document.querySelector(".order-form form").reset();
+
+    // tạo popup
+    const msg = document.createElement("div");
+    msg.innerText = "✔ Đã đặt hàng!";
+
+    msg.style = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #8C6A54;
+        color: white;
+        padding: 18px 35px;
+        border-radius: 12px;
+        font-size: 17px;
+        z-index: 999;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        opacity: 0;
+        transition: 0.3s;
+    `;
+
+    document.body.appendChild(msg);
+
+    // fade in
+    setTimeout(() => msg.style.opacity = "1", 10);
+
+    // fade out
+    setTimeout(() => msg.style.opacity = "0", 1700);
+    setTimeout(() => msg.remove(), 2000);
+
+    // xóa giỏ hàng
+    localStorage.removeItem("cart");
+    loadCart();
+}
+// RUN
+loadCart();
+ function toggleChat() {
+  const chatBox = document.getElementById("chatBox");
+  if (chatBox.style.display === "flex") {
+    chatBox.style.display = "none";
+  } else {
+    chatBox.style.display = "flex";
+  }
+}
+
+function sendMessage() {
+  const input = document.getElementById("chatInput");
+  const chatBody = document.getElementById("chatBody");
+  const message = input.value.trim();
+
+  if (message === "") return;
+
+  // Tin nhắn người dùng
+  const userMsg = document.createElement("div");
+  userMsg.className = "user-message";
+  userMsg.textContent = message;
+  chatBody.appendChild(userMsg);
+
+  // Cuộn xuống cuối
+  chatBody.scrollTop = chatBody.scrollHeight;
+
+  // Trả lời tự động
+  setTimeout(() => {
+    const botMsg = document.createElement("div");
+    botMsg.className = "bot-message";
+
+    if (message.toLowerCase().includes("giá")) {
+      botMsg.textContent = "Dạ, giá bánh sẽ hiển thị ngay trong phần sản phẩm hoặc tổng thanh toán nhé 🍰";
+    } else if (message.toLowerCase().includes("giao")) {
+      botMsg.textContent = "Dạ, tiệm có hỗ trợ giao hàng nhanh trong ngày tùy khu vực ạ 🚚";
+    } else if (message.toLowerCase().includes("thanh toán")) {
+      botMsg.textContent = "Dạ, bạn có thể chọn chuyển khoản hoặc thanh toán khi nhận hàng ạ 💳";
+    } else {
+      botMsg.textContent = "Cảm ơn bạn đã nhắn tin 💕 Tiệm sẽ hỗ trợ bạn sớm nhất nhé!";
+    }
+
+    chatBody.appendChild(botMsg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }, 600);
+
+  input.value = "";
+}
+    
+  </script>
+<!-- Chat box -->
+<div class="chat-toggle" onclick="toggleChat()">💬</div>
+
+<div class="chat-box" id="chatBox">
+  <div class="chat-header">
+    Hỗ trợ khách hàng
+    <span onclick="toggleChat()">✖</span>
+  </div>
+
+  <div class="chat-body" id="chatBody">
+    <div class="bot-message">Xin chào 👋<br>Tiệm bánh có thể hỗ trợ gì cho bạn?</div>
+  </div>
+
+  <div class="chat-footer">
+    <input type="text" id="chatInput" placeholder="Nhập tin nhắn...">
+    <button onclick="sendMessage()">Gửi</button>
+  </div>
+</div>
+<div class="contact">
+<div>
+<h3>Thông tin</h3>
+<p>Đà Nẵng</p>
+<p>0123 456 789</p>
+<p>mobakery@gmail.com</p>
+</div>
+
+<div class="social">
+<h3>Mạng xã hội</h3>
+<i class="fab fa-facebook"></i>
+<i class="fab fa-tiktok"></i>
+<i class="fa fa-comment"></i>
+</div>
+
+<div>
+<h3>Liên hệ nhanh</h3>
+<p>Inbox để đặt bánh ngay</p>
+</div>
+</div>
+
+<div class="map">
+<iframe src="https://www.google.com/maps?q=Da+Nang&output=embed"></iframe>
+</div>
+
+
+</body>
+</html>
